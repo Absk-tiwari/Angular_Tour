@@ -17,6 +17,8 @@ baseUrl:string = "http://localhost/ang-php-mysql/api/";
 
 qualsUrl : string = 'http://192.168.1.33/codeIgniter_CRUD/index.php/api/qualifications/add_qualifications/create_qualifications_post';
 
+profileUpdate:string = 'http://localhost/test/save.php';
+
 @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
 
 
@@ -75,10 +77,16 @@ submitQuals(students:any){
   let mobile = students.mobile
   let qualifications = students.qualifications
 
-  return this.httpClient.post<any>(this.qualsUrl , { name, email, mobile , qualifications }).pipe(map(data => {
+  return this.httpClient.post<any>(this.local , { name, email, mobile , qualifications }).pipe(map(data => {
     return data;
   }));
 
+}
+
+updateProfile(formdata: any){
+  return this.httpClient.post<any>(this.profileUpdate, formdata).pipe(map(data => {
+    return data;
+  }))
 }
 
 }

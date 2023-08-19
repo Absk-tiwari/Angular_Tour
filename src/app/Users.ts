@@ -1,13 +1,15 @@
 export class Users {
-  public Id: number;
+  public Id: string;
   public name: string;
   public pwd:string;
   public email:string;
+  public pfp : any  ;
 
-  constructor(Id:number,name: string,pwd:string,email:string) {
-    this.Id = Id;
-    this.name = name;
-    this.pwd = pwd;
-    this.email = email;
+  constructor() {
+    this.Id = '';
+    this.name = '';
+    this.pwd = '';
+    this.email = '';
+    this.pfp = '';
   }
 }

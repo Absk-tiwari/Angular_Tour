@@ -30,8 +30,8 @@ postdata(angForm: { value: { email: any; password: any; }; })
 this.dataService.userlogin(angForm.value.email,angForm.value.password)
 .pipe(first())
 .subscribe((data)=> {
-const redirect = this.dataService.redirectUrl ? this.dataService.redirectUrl : '/dashboard';
-console.log(redirect);
+const redirect = this.dataService.redirectUrl ? this.dataService.redirectUrl : '/home';
+ localStorage.setItem('User',JSON.stringify(data));
 this.router.navigate([redirect]);
 },
 (err) => {

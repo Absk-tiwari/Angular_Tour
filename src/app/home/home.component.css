@@ -1,0 +1,36 @@
+.aa{
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#append{
+  float: right !important;
+  margin-left: 90%;
+}
+
+button{
+  /* margin-top: 50%; */
+  margin-left: 88.3%;
+}
+
+.row{
+  margin-top: 50px;
+}
+
+input{
+  border-radius: 5px;
+  background-color: rgb(234, 239, 237);
+  height: 40px;
+}
+
+.card-header{
+  background-color: white;
+}
+.card-footer{
+  background-color: white;
+}
+
+#submit{
+  float: initial;
+}

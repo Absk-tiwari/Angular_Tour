@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-header">
+
+    <h1> Nested Form Array</h1>
+    <div class="col text-center">
+      <button type="button" class="btn btn-success btn-sm" (click)="addStudentQual()"> Qual+ </button>
+    </div>
+
+  </div>
+
+<div class="card-body">
+  <div class="col-md-8">
+<form [formGroup]="studentform" (ngSubmit)="SubmitData(studentform)">
+  <div >
+    <div   >
+      <div  style=" padding: 10px; width: 600px; margin: 5px;  " >
+
+          First Name :
+          <input type="text" formControlName="name"  class="col-2"/>&nbsp;&nbsp;
+
+          Email:
+          <input type="email" formControlName="email" class="col-2" />&nbsp;&nbsp;
+
+          Mobile
+          <input type="text" formControlName="mobile" class="col-3" />&nbsp;&nbsp;
+
+        <div formArrayName="qualifications">
+          <div *ngFor="let qual of studentQuals().controls; let qualIndex=index"  >
+            <div [formGroupName]="qualIndex"  >
+              <br>
+                Year :
+              <input type="text" formControlName="year" class="col-2"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Course:
+              <input type="text" formControlName="course" class="col-2"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                University :
+              <input type="text" formControlName="university" class="col-2" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              <button class="btn-sm btn btn-warning" type="button" style="margin-left: 80%;" (click)="removeStudentQual(qualIndex)">
+               <b> &nbsp;-&nbsp; </b>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-success" id="submit" type="submit"><b>Save</b></button>
+  </div>
+</form>
+</div>
+</div>
+
+  <!-- <button type="button" class="btn btn-success" style="display: list-item;"  (click)="addStudent()">+Student</button> -->
+</div>
+<!-- {{this.studentform.value | json}} -->
+<!-- <br /><br /> -->
+<!-- <a
+  href="https://www.tektutorialshub.com/angular/nested-formarray-example-add-form-fields-dynamically/"
+  >Nested FormArray / Dynamic FormArray</a
+> -->

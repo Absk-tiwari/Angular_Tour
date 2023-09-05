@@ -11,15 +11,23 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit{
   User: Users;
-  form : FormGroup;
+  form : FormGroup; userData : any[] = [];
+  file : File | null = null ;
   public constructor(private api : ApiService,private fb: FormBuilder, private router:Router){
     var root = localStorage.getItem('User')
-    if(root!=undefined)
-      this.User = JSON.parse(root)[0];
+    if(root!=undefined){
+      this.User = JSON.parse(root) ;
+      var take = JSON.parse(root);
+      this.userData.push({
+        id : take.id,
+        profile : take.profile
+      })
+    }
     else
       this.User = new Users();
 
     this.form = this.fb.group({
+      id : this.User.id,
       name : this.User.name,
       email : this.User.email,
       pwd: this.User.pwd,
@@ -30,24 +38,39 @@ export class DashboardComponent implements OnInit{
 
   }
 
+  capture(event:any){
+    const file : File = event.target.files[0];
+    if(file){
+      this.file = file;
+    }
+  }
 
   updateProfile(updatedata:FormGroup){
       let email = updatedata.value.email;
+      let user_id = updatedata.value.id;
       let name = updatedata.value.name;
       let password = updatedata.value.pwd;
-      let profile = updatedata.value.pfp;
 
      const formdata = new FormData();
-     formdata.append('file', profile )
-     console.log(typeof(profile));
-     console.log((updatedata.value.pfp));
+     formdata.append('user_id', user_id )
+     formdata.append('name', name )
+     formdata.append('email', email )
+     formdata.append('password', password )
+     if(this.file != null){
+       formdata.append('profile',  this.file )
+     }
 
 
      this.api.updateProfile(formdata)
           .subscribe((data)=> {
           const redirect = this.api.redirectUrl ? this.api.redirectUrl : '/home';
-          localStorage.setItem('User',JSON.stringify(data));
-          this.router.navigate([redirect]);
+          var get =  localStorage.getItem('User');
+          if(get?.length){
+              const user =  JSON.parse(get) ;
+              user.profile = data.profile
+              localStorage.setItem('User', JSON.stringify(user));
+            }
+            this.router.navigate([redirect]);
           });
 
   }

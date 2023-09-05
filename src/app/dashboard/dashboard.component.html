@@ -1,24 +1,35 @@
 <div class="container">
   <div class="card" id="profile">
-    <div class="card-header">
+    <div class="card-header" >
        <b>Hello {{User.name}}</b>
     </div>
   <form [formGroup]="form" (ngSubmit)="updateProfile(form)"  enctype="multipart/form-data" >
   <div class="card-body">
     <h3>Update Profile</h3>
+
     <div class="row">
       <div class="container">
-          <div *ngIf="User.pfp;else upload" class="form-group" id="pic">
-            <img src="{{User.pfp}}" alt="not uploaded" >
+          <div *ngIf="userData.length; else upload" class="form-group" >
+            <img src="{{userData[0].profile}}" alt="not uploaded" id="pic">
           </div>
           <ng-template #upload>
             <img src="../../assets/User.jpg" alt="" id="pic">
-            <input type="file" formControlName="pfp" >
           </ng-template>
+          <input type="file" formControlName="pfp" (change)="capture($event)" >
       </div>
+       <div *ngIf="file">
+        <section class="file-info">
+          File Details :
+          <ul>
+            <li>{{file.name}}</li>
+            <li>{{file.type}}</li>
+            <li>{{file.size}}</li>
+          </ul>
+        </section>
+       </div>
       <div class="form-group profile" >
         <label for="name">Name</label>
-        <input type="text" formControlName="name" id="name" class="form-control" value="{{User.name}}">
+        <input type="text" formControlName="name" id="name" class="form-control">
       </div>
       <div class="form-group profile">
         <label for="email">Email</label>
@@ -26,8 +37,9 @@
       </div>
       <div class="form-group profile" >
         <label for="pass">Password</label>
-        <input type="text" formControlName="pwd" placeholder="Change Password" id="pass" class="form-control" value="{{User.email}}">
+        <input type="text" formControlName="pwd" placeholder="Change Password" id="pass" class="form-control" value="{{User.pwd}}">
       </div>
+      <input type="hidden" id="user" formControlName="id" value="{{User.id}}" >
     </div>
   </div>
   <div class="card-footer">

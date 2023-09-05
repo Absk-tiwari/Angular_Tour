@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-    <a class="navbar-brand mx-5" *ngIf="loginbtn" routerLink="" routerLinkActive="active">Portal </a>
+    <a class="navbar-brand mx-5"  style="font-family:  'Courier',monospace;" *ngIf="loginbtn" routerLink="" routerLinkActive="active"><b>Portal</b> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample" aria-controls="navbarsExample" aria-expanded="false" aria-label="Toggle navigation">
 
     <span class="navbar-toggler-icon"></span>
@@ -23,15 +23,14 @@
           <li class="nav-item">
             <a class="nav-link" *ngIf="logoutbtn" routerLink="dashboard" routerLinkActive="active">Dashboard</a>
           </li>
-          <li class="nav-item" *ngIf="User.pfp;else defined" >
-            <img src="" id="pfp">
+          <li class="nav-item" *ngIf="userData.length; else defined" >
+            <img src= "{{userData.length}}" id="pfp">
           </li>
           <ng-template #defined>
-            <li class="nav-item">
               <img src="../assets/User.jpg" id="pfp">
-            </li>
+
           </ng-template>
-      </ul>
+          </ul>
     </div>
     </nav>
   </div>

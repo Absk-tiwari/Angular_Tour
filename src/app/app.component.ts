@@ -12,33 +12,40 @@ export class AppComponent {
 loginbtn:boolean;
 logoutbtn:boolean;
 User: Users = new Users;
-constructor(private dataService: ApiService) {
-dataService.getLoggedInName.subscribe(name => this.changeName(name));
- if(this.dataService.isLoggedIn())
-{
-console.log("loggedin");
-this.loginbtn=false;
-this.logoutbtn=true;
-    var data = localStorage.getItem('User')
-    if(data!=undefined){
-      this.User  = JSON.parse(data)[0];
-    }
+userData : any[] = [];
+constructor(private api: ApiService) {
+  api.getLoggedInName.subscribe(name => this.changeName(name));
+
+   if(this.api.isLoggedIn()){
+
+      this.loginbtn=false;
+      this.logoutbtn=true;
+      var data = localStorage.getItem('User')
+
+      if(data!=undefined){
+        var dataArr  = JSON.parse(data)  ;
+        this.userData.push({
+          id : dataArr.id,
+          profile : dataArr.profile
+        });
+      }
 }
 else{
-this.loginbtn=true;
-this.logoutbtn=false
+    this.loginbtn=true;
+    this.logoutbtn=false
 }
 
 }
 
 private changeName(name: boolean): void {
-this.logoutbtn = name;
-this.loginbtn = !name;
+    this.logoutbtn = name;
+    this.loginbtn = !name;
 }
+
 logout()
 {
-this.dataService.deleteToken();
-localStorage.clear();
-window.location.href = window.location.href;
+    this.api.deleteToken();
+    localStorage.clear();
+    window.location.href = window.location.href;
 }
 }

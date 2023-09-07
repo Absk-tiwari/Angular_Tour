@@ -29,6 +29,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
+
           },
           "configurations": {
             "production": {
@@ -61,12 +62,18 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Angular_Tour:build:production"
+              "browserTarget": "Angular_Tour:build:production",
+              "proxyConfig" : "src/proxy.json"
             },
             "development": {
-              "browserTarget": "Angular_Tour:build:development"
+              "browserTarget": "Angular_Tour:build:development",
+              "proxyConfig" : "src/proxy.json"
             }
           },
+          "options": {
+            "browserTarget": "Angular_Tour:build",
+            "proxyConfig": "src/proxy.json"
+         },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

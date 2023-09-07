@@ -5,6 +5,11 @@ img{
   height: 50px;
   width: 50px;
   border-radius: 90%;
-  margin-left: 1100px;
-  float:right;
+
+}
+nav{
+  background-color: #e9f4ff!important;
+}
+input,li, select,textarea {
+  font-family:cursive!important
 }

@@ -3,7 +3,9 @@ import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Users } from './Users';
 import { FormArray, FormControl } from '@angular/forms';
-
+const HttpUploadOptions = {
+  headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })
+}
 @Injectable({
 providedIn: 'root'
 })
@@ -11,26 +13,28 @@ providedIn: 'root'
 export class ApiService {
 
 
-redirectUrl!: string;
-local:string = 'http://localhost/test/save.php';
-baseUrl:string = "http://localhost/ang-php-mysql/api/";
+  redirectUrl!: string;
+  local:string = 'http://localhost/Angular-Tour-PHP/api/Home/save.php';
+  baseUrl:string = "http://localhost/Angular-Tour-PHP/api/Auth";
 
-qualsUrl : string = 'http://192.168.1.33/codeIgniter_CRUD/index.php/api/qualifications/add_qualifications/create_qualifications_post';
+  qualsUrl : string = 'http://192.168.1.33/codeIgniter_CRUD/index.php/api/qualifications/add_qualifications/create_qualifications_post';
 
-profileUpdate:string = 'http://localhost/test/save.php';
+  profileUpdate:string = 'http://localhost/Angular-Tour-PHP/api/Home/Profile/update_profile.php';
 
-@Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
-
-
-
-constructor(private httpClient : HttpClient) {}
+  @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
 
 
-public userlogin(username: any, password: any) {
 
-  return this.httpClient.post<any>(this.baseUrl + '/login.php', { username, password })
+  constructor(private httpClient : HttpClient) {
+
+  }
+
+
+  public userlogin(username: any, password: any) {
+
+    return this.httpClient.post<any>(this.baseUrl + '/login.php', { username, password }, {headers: new HttpHeaders().set('Access-Control-Allow-Origin','*')})
   .pipe(map(Users => {
-    console.log(Users);
+    alert('Logged in successfully!');
     if(Users.length > 0){
       this.setToken(Users[0].email);
       this.getLoggedInName.emit(true);
@@ -44,6 +48,7 @@ public userlogin(username: any, password: any) {
 public SignUp(name: any,email: any,pwd: any) {
     return this.httpClient.post<any>(this.baseUrl + '/register.php', { name,email, pwd })
     .pipe(map(Users => {
+       alert('Successfully Registered !');
         return Users;
     }));
 }
@@ -64,7 +69,6 @@ deleteToken() {
 isLoggedIn() {
 
   const usertoken = this.getToken();
-  console.log(usertoken)
   return (usertoken != null)? true : false;
 
 }
@@ -85,6 +89,7 @@ submitQuals(students:any){
 
 updateProfile(formdata: any){
   return this.httpClient.post<any>(this.profileUpdate, formdata).pipe(map(data => {
+    alert('Profile Updated Successfully !');
     return data;
   }))
 }

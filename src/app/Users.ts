@@ -1,15 +1,15 @@
 export class Users {
-  public Id: string;
+  public id : string;
   public name: string;
   public pwd:string;
   public email:string;
-  public pfp : any  ;
+  public pfp :File | null = null ;
 
   constructor() {
-    this.Id = '';
+    this.id = '';
     this.name = '';
     this.pwd = '';
     this.email = '';
-    this.pfp = '';
+    this.pfp = null;
   }
 }

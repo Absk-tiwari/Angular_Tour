@@ -22,3 +22,15 @@ label{
 button{
   float: right;
 }
+.card-header{
+  font-family: monospace;
+}
+
+li{
+  list-style-type: none;
+  margin: auto;
+}
+
+ul{
+  display: flex;
+}

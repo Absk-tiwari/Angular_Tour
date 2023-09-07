@@ -1,37 +1,54 @@
-<div class="container-fluid">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-    <a class="navbar-brand mx-5"  style="font-family:  'Courier',monospace;" *ngIf="loginbtn" routerLink="" routerLinkActive="active"><b>Portal</b> </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample" aria-controls="navbarsExample" aria-expanded="false" aria-label="Toggle navigation">
-
-    <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarsExample">
-      <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" *ngIf="loginbtn" routerLink="home" routerLinkActive="active">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" *ngIf="loginbtn" routerLink="login" routerLinkActive="active">Login</a>
-          </li>
-          <li class="nav-item">
-            <button type="button" *ngIf="logoutbtn" class="btn btn-block" (click)="logout()">logout</button>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" *ngIf="loginbtn" routerLink="registration" routerLinkActive="active">Registration</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" *ngIf="logoutbtn" routerLink="dashboard" routerLinkActive="active">Dashboard</a>
-          </li>
-          <li class="nav-item" *ngIf="userData.length; else defined" >
-            <img src= "{{userData.length}}" id="pfp">
-          </li>
-          <ng-template #defined>
-              <img src="../assets/User.jpg" id="pfp">
-
-          </ng-template>
-          </ul>
+<div class="card">
+  <div class="card-header d-flex mt-4">
+    <div class="col-md-8">
+      <h1> Nested Form Array</h1>
     </div>
-    </nav>
+    <div class="col-md-2 text-center mt-3">
+      <button type="button" class="btn btn-success btn-sm qual" (click)="addStudentQual()"> Qual+ </button>
+    </div>
+
   </div>
-  <router-outlet></router-outlet>
+
+<div class="card-body">
+  <div class="col-md-12">
+<form [formGroup]="studentform" (ngSubmit)="SubmitData(studentform)">
+  <div >
+    <div   >
+      <div  style=" padding: 10px; margin: 5px; ">
+
+         <label for=""> Name: </label>
+         <input type="text" formControlName="name" class="col-2"/>&nbsp;&nbsp;
+
+         <label for="">Email: </label>
+         <input type="email" formControlName="email" class="col-3" />&nbsp;&nbsp;
+
+         <label for="">Mobile: </label>
+         <input type="text" formControlName="mobile" class="col-2" />&nbsp;&nbsp;
+
+        <div formArrayName="qualifications" >
+          <div *ngFor="let qual of studentQuals().controls; let qualIndex=index" class="quals" >
+            <div [formGroupName]="qualIndex"  >
+              <br>
+                Year :
+              <input type="text" formControlName="year" class="col-1"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Course:
+              <input type="text" formControlName="course" class="col-2"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                University :
+              <input type="text" formControlName="university" class="col-3" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              <button class="btn-sm btn btn-warning rem" title="Remove" type="button" (click)="removeStudentQual(qualIndex)"><b> - </b>  </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-success" id="submit" type="submit"><b>Save</b></button>
+  </div>
+</form>
+</div>
+</div>
+
+</div>

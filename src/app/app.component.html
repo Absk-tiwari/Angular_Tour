@@ -1,46 +1,41 @@
-<div class="container-fluid">
+<div class="col-md-12 d-flex">
+  <div class="col-md-10 mx-5 mt-2 mb-2">
   <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-    <a class="navbar-brand mx-5" *ngIf="loginbtn" routerLink="" routerLinkActive="active">Portal </a>
+    <a class="navbar-brand mx-5"  style="font-family:  'Courier',monospace;" *ngIf="loginbtn" routerLink="" routerLinkActive="active"><b>Portal</b> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample" aria-controls="navbarsExample" aria-expanded="false" aria-label="Toggle navigation">
 
-              <button class="btn-sm btn btn-warning rem" title="Remove" type="button" (click)="removeStudentQual(qualIndex)"><b> - </b>  </button>
-            </div>
-          </div>
-        </div>
+    <span class="navbar-toggler-icon"></span>
+    </button>
 
     <div class="collapse navbar-collapse" id="navbarsExample">
       <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" *ngIf="loginbtn" routerLink="home" routerLinkActive="active">Home</a>
+            <a class="nav-link"  routerLink="home" routerLinkActive="active">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" *ngIf="loginbtn" routerLink="login" routerLinkActive="active">Login</a>
           </li>
           <li class="nav-item">
-            <button type="button" *ngIf="logoutbtn" class="btn btn-block" (click)="logout()">logout</button>
+            <a type="button" *ngIf="logoutbtn" class="btn btn-block nav-link" (click)="logout()">logout</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" *ngIf="loginbtn" routerLink="registration" routerLinkActive="active">Registration</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" *ngIf="logoutbtn" routerLink="dashboard" routerLinkActive="active">Dashboard</a>
+            <a class="nav-link" *ngIf="logoutbtn" routerLink="dashboard" routerLinkActive="active">Profile</a>
           </li>
-          <li class="nav-item" *ngIf="User.pfp;else defined" >
-            <img src="" id="pfp">
-          </li>
-          <ng-template #defined>
-            <li class="nav-item">
-              <img src="../assets/User.jpg" id="pfp">
-            </li>
-          </ng-template>
-      </ul>
+        </ul>
     </div>
+  </nav>
+</div>
+<div class="col-md-2 mx-5 mt-2 mb-2">
+  <div class="nav-item" *ngIf="userData.length; else defined" id="pfp">
+    <img src= "{{userData[0].profile}}" id="pfp" routerLink="dashboard" >
   </div>
-  <div class="card-footer">
-    <button class="btn btn-success" id="submit" type="submit"><b>Save</b></button>
-  </div>
-</form>
+  <ng-template #defined>
+      <img src="../assets/User.jpg" id="pfp" routerLink="dashboard" >
+  </ng-template>
 </div>
 </div>
+  <router-outlet></router-outlet>
 
-</div>

@@ -27,16 +27,17 @@ ngOnInit() {
 }
 postdata(angForm: { value: { email: any; password: any; }; })
 {
-this.dataService.userlogin(angForm.value.email,angForm.value.password)
-.pipe(first())
-.subscribe((data)=> {
-const redirect = this.dataService.redirectUrl ? this.dataService.redirectUrl : '/home';
- localStorage.setItem('User',JSON.stringify(data));
-this.router.navigate([redirect]);
+     this.dataService.userlogin(angForm.value.email,angForm.value.password)
+     .pipe(first())
+     .subscribe((data)=> {
+     const redirect = this.dataService.redirectUrl ? this.dataService.redirectUrl : '/home';
+        console.log(data);
+     localStorage.setItem('User',JSON.stringify(data));
+     this.router.navigate([redirect]);
 },
 (err) => {
   alert(err.error.message)
-  console.log(err);
+    console.log(err);
 });
 }
 get email() { return this.angForm.get('email'); }

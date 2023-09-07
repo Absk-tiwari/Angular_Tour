@@ -5,11 +5,22 @@ img{
   height: 50px;
   width: 50px;
   border-radius: 90%;
-
 }
 nav{
-  background-color: #e9f4ff!important;
+  background-color: #cbd5e0!important;
 }
 input,li, select,textarea {
   font-family:cursive!important
+}
+img:hover{
+  opacity: 0.5;
+}
+.nav-item{
+  margin-left: 18px;
+}
+
+
+.nav-link:hover{
+  color: #0b0f12;
+  font-weight:600;
 }

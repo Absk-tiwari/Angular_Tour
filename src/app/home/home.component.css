@@ -9,9 +9,8 @@
   margin-left: 90%;
 }
 
-button{
-  /* margin-top: 50%; */
-  margin-left: 88.3%;
+h1{
+  font-family:Georgia, 'Times New Roman', Times, serif
 }
 
 .row{
@@ -22,6 +21,9 @@ input{
   border-radius: 5px;
   background-color: rgb(234, 239, 237);
   height: 40px;
+  font-family:monospace!important;
+  margin-left:10px;
+  border-style: inset;
 }
 
 .card-header{
@@ -33,4 +35,28 @@ input{
 
 #submit{
   float: initial;
+  margin-left:50% ;
+}
+
+.quals{
+  width: max-content;
+}
+
+label{
+  font-family: cursive;
+}
+
+.qual:hover{
+  width: 75px;
+  font-size: large;
+  border-radius: 10px;
+}
+
+.rem{
+  font-size: larger;
+  width: 40px;
+}
+
+.rem:hover{
+  background-color: rgb(230, 145, 75);
 }

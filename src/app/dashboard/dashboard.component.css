@@ -34,3 +34,7 @@ li{
 ul{
   display: flex;
 }
+
+#pic:hover {
+  opacity: 0.5;
+}

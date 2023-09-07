@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from './api.service';
 import { Users } from './Users';
+import { Router } from '@angular/router';
 
 @Component({
 selector: 'app-root',
@@ -13,7 +14,7 @@ loginbtn:boolean;
 logoutbtn:boolean;
 User: Users = new Users;
 userData : any[] = [];
-constructor(private api: ApiService) {
+constructor(private api: ApiService,private router:Router) {
   api.getLoggedInName.subscribe(name => this.changeName(name));
 
    if(this.api.isLoggedIn()){
@@ -23,12 +24,13 @@ constructor(private api: ApiService) {
       var data = localStorage.getItem('User')
 
       if(data!=undefined){
-        var dataArr  = JSON.parse(data)  ;
+        var dataArr  = JSON.parse(data)[0];
         this.userData.push({
           id : dataArr.id,
           profile : dataArr.profile
         });
       }
+
 }
 else{
     this.loginbtn=true;
@@ -46,6 +48,6 @@ logout()
 {
     this.api.deleteToken();
     localStorage.clear();
-    window.location.href = window.location.href;
+    this.router.navigate(['/login'])
 }
 }

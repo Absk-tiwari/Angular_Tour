@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Users } from '../Users';
 import { ApiService } from '../api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,15 +13,24 @@ export class DashboardComponent implements OnInit{
   User: Users;
   form : FormGroup; userData : any[] = [];
   file : File | null = null ;
-  public constructor(private api : ApiService,private fb: FormBuilder, private router:Router){
+  previewUrl : string | ArrayBuffer | null | undefined
+  @ViewChildren("input") inputs: QueryList<ElementRef> | undefined;
+
+  triggerEvent = (el: HTMLElement, eventType: string ) =>
+   el.dispatchEvent(new window.Event(eventType, { bubbles: true }));
+
+  public constructor(private api : ApiService,private fb: FormBuilder, private router:Router,private cdRef: ChangeDetectorRef){
     var root = localStorage.getItem('User')
+
     if(root!=undefined){
-      this.User = JSON.parse(root) ;
+      this.User = JSON.parse(root)[0] ;
       var take = JSON.parse(root);
+      console.log(take);
+
       this.userData.push({
-        id : take.id,
-        profile : take.profile
-      })
+        id : take[0].id,
+        profile : take[0].profile
+      });
     }
     else
       this.User = new Users();
@@ -33,15 +42,19 @@ export class DashboardComponent implements OnInit{
       pwd: this.User.pwd,
       pfp : this.User.pfp
     });
-  }
-  ngOnInit():void {
 
   }
+
 
   capture(event:any){
     const file : File = event.target.files[0];
     if(file){
       this.file = file;
+      var reader = new FileReader ();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.previewUrl = event.target?.result;
+      }
     }
   }
 
@@ -65,13 +78,40 @@ export class DashboardComponent implements OnInit{
           .subscribe((data)=> {
           const redirect = this.api.redirectUrl ? this.api.redirectUrl : '/home';
           var get =  localStorage.getItem('User');
-          if(get?.length){
-              const user =  JSON.parse(get) ;
-              user.profile = data.profile
+          if(get != undefined){
+            const user =  JSON.parse(get);
+            console.log(user)
+              user[0].profile = data.profile
               localStorage.setItem('User', JSON.stringify(user));
             }
             this.router.navigate([redirect]);
+            window.location.href = window.location.href;
           });
 
   }
+
+
+  uploadImage(event:any){
+    // console.log(event.target.id, document.getElementById('pfp'));
+    const elem = document.getElementById('files');
+    console.log(elem)
+    if(elem != null){
+      this.triggerEvent(elem , 'change');
+    }
+  }
+
+  ngOnInit():void {
+    console.log(this.User)
+  }
+
+  // ngAfterViewInit() {
+  //   if(this.inputs != undefined){
+  //     const inputToTrigger = this.inputs.toArray()[2];
+  //     (inputToTrigger.nativeElement as HTMLInputElement).dispatchEvent(
+  //       new Event("change")
+  //     );
+  //   }
+  //   this.cdRef.detectChanges();
+  // }
+
 }

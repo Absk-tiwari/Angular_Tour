@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
 <div class="container">
   <div class="card" id="profile">
     <div class="card-header" >
@@ -10,35 +11,26 @@
     <div class="row">
       <div class="container">
           <div *ngIf="userData.length; else upload" class="form-group" >
-            <img src="{{userData[0].profile}}" alt="not uploaded" id="pic">
+            <img *ngIf="previewUrl;else prev" src="{{previewUrl}}" alt="not uploaded" id="pic">
+            <ng-template #prev>
+              <img src="{{userData[0].profile}}" alt="not uploaded" id="pic" (click)="uploadImage($event)">
+            </ng-template>
           </div>
           <ng-template #upload>
             <img src="../../assets/User.jpg" alt="" id="pic">
           </ng-template>
-          <input type="file" formControlName="pfp" (change)="capture($event)" >
+          <input type="file" formControlName="pfp" id="files" (change)="capture($event)" >
       </div>
-       <div *ngIf="file">
-        <section class="file-info">
-          File Details :
-          <ul>
-            <li>{{file.name}}</li>
-            <li>{{file.type}}</li>
-            <li>{{file.size}}</li>
-          </ul>
-        </section>
-       </div>
-      <div class="form-group profile" >
+
+      <div class="form-group profile">
         <label for="name">Name</label>
-        <input type="text" formControlName="name" id="name" class="form-control">
+        <input type="text" formControlName="name" id="name" class="form-control" value="{{User.name}}">
       </div>
       <div class="form-group profile">
         <label for="email">Email</label>
         <input type="text" formControlName="email" id="email" class="form-control" value="{{User.email}}">
       </div>
-      <div class="form-group profile" >
-        <label for="pass">Password</label>
-        <input type="text" formControlName="pwd" placeholder="Change Password" id="pass" class="form-control" value="{{User.pwd}}">
-      </div>
+
       <input type="hidden" id="user" formControlName="id" value="{{User.id}}" >
     </div>
   </div>

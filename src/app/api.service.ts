@@ -12,14 +12,17 @@ providedIn: 'root'
 
 export class ApiService {
 
+  common = 'http://localhost/Angular-Tour-PHP/api/';
 
   redirectUrl!: string;
-  local:string = 'http://localhost/Angular-Tour-PHP/api/Home/save.php';
-  baseUrl:string = "http://localhost/Angular-Tour-PHP/api/Auth";
+  local:string = this.common + 'Home/save.php';
+  baseUrl:string = this.common + "Auth";
 
   qualsUrl : string = 'http://192.168.1.33/codeIgniter_CRUD/index.php/api/qualifications/add_qualifications/create_qualifications_post';
 
-  profileUpdate:string = 'http://localhost/Angular-Tour-PHP/api/Home/Profile/update_profile.php';
+  profileUpdate:string = this.common + 'Home/Profile/update_profile.php';
+
+  records = this.common + 'Home/Records/records.php';
 
   @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
 
@@ -30,7 +33,7 @@ export class ApiService {
   }
 
 
-  public userlogin(username: any, password: any) {
+public userlogin(username: any, password: any) {
 
     return this.httpClient.post<any>(this.baseUrl + '/login.php', { username, password }, {headers: new HttpHeaders().set('Access-Control-Allow-Origin','*')})
   .pipe(map(Users => {
@@ -91,6 +94,12 @@ updateProfile(formdata: any){
   return this.httpClient.post<any>(this.profileUpdate, formdata).pipe(map(data => {
     alert('Profile Updated Successfully !');
     return data;
+  }))
+}
+
+getRecords() {
+  return this.httpClient.get(this.records,{responseType:"text"}).pipe(map(data => {
+     return data.slice(0,-1);
   }))
 }
 

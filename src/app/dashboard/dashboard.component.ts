@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit{
 
      this.api.updateProfile(formdata)
           .subscribe((data)=> {
-          const redirect = this.api.redirectUrl ? this.api.redirectUrl : '/home';
+          const redirect = '/home';
           var get =  localStorage.getItem('User');
           if(get != undefined){
             const user =  JSON.parse(get);
@@ -85,7 +85,6 @@ export class DashboardComponent implements OnInit{
               localStorage.setItem('User', JSON.stringify(user));
             }
             this.router.navigate([redirect]);
-            window.location.href = window.location.href;
           });
 
   }
@@ -101,7 +100,7 @@ export class DashboardComponent implements OnInit{
   }
 
   ngOnInit():void {
-    console.log(this.User)
+    console.log(this.userData)
   }
 
   // ngAfterViewInit() {

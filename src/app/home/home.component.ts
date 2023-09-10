@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../api.service';
-import { ArrayType } from '@angular/compiler';
-import { first } from 'rxjs';
+import { ArrayType, ConstantPool } from '@angular/compiler';
+import { first, map } from 'rxjs';
+import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { first } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
-
+  list :any[] = [];
   studentform: FormGroup;
   ready : number = 0;
   public constructor( private fb:FormBuilder, private api:ApiService){
@@ -92,11 +93,28 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
-    // this.studentform = this.fb.group({
-    //   students: this.fb.array([])
-    // });
-  }
+      this.api.getRecords().pipe(first()).subscribe(data => {
+        // let receive = data.replace('l','');
+        // console.log(data);
+
+        let raw = JSON.parse(data)
+        const keys = (Object.keys(raw))
+        keys.forEach((key,index)=>{
+          let arr = {
+            name : raw[key].Name ,
+            email : raw[key].Email  ,
+            qualification : <any>[],
+          }
+            // console.log(typeof raw[key])
+            let quals = raw[key].Qualifications
+            arr.qualification.push(JSON.parse(quals)[0])
+
+          this.list.push(arr);
+        });
+        console.log(this.list)
+
+      });
+   }
 }
 function jQuery(arg0: string) {
   throw new Error('Function not implemented.');

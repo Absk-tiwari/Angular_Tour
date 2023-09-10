@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header d-flex mt-4">
     <div class="col-md-8">
-      <h1> Nested Form Array</h1>
+      <h1> Add &nbsp; Employee </h1>
     </div>
     <div class="col-md-2 text-center mt-3">
       <button type="button" class="btn btn-success btn-sm qual" (click)="addStudentQual()"> Qual+ </button>
@@ -11,44 +11,71 @@
 
 <div class="card-body">
   <div class="col-md-12">
-<form [formGroup]="studentform" (ngSubmit)="SubmitData(studentform)">
-  <div >
-    <div   >
-      <div  style=" padding: 10px; margin: 5px; ">
+    <form [formGroup]="studentform" (ngSubmit)="SubmitData(studentform)">
+    <div >
+      <div   >
+        <div  style=" padding: 10px; margin: 5px; ">
 
-         <label for=""> Name: </label>
-         <input type="text" formControlName="name" class="col-2"/>&nbsp;&nbsp;
+          <label for="">Emp Name: </label>
+          <input type="text" formControlName="name" class="col-2"/>&nbsp;&nbsp;
 
-         <label for="">Email: </label>
-         <input type="email" formControlName="email" class="col-3" />&nbsp;&nbsp;
+          <label for="">Emp Email: </label>
+          <input type="email" formControlName="email" class="col-3" />&nbsp;&nbsp;
 
-         <label for="">Mobile: </label>
-         <input type="text" formControlName="mobile" class="col-2" />&nbsp;&nbsp;
+          <label for="">Mobile: </label>
+          <input type="text" formControlName="mobile" class="col-2" />&nbsp;&nbsp;
 
-        <div formArrayName="qualifications" >
-          <div *ngFor="let qual of studentQuals().controls; let qualIndex=index" class="quals" >
-            <div [formGroupName]="qualIndex"  >
-              <br>
-                Year :
-              <input type="text" formControlName="year" class="col-1"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Course:
-              <input type="text" formControlName="course" class="col-2"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                University :
-              <input type="text" formControlName="university" class="col-3" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div formArrayName="qualifications" >
+            <div *ngFor="let qual of studentQuals().controls; let qualIndex=index" class="quals" >
+              <div [formGroupName]="qualIndex">
+                <br>
+                  Year :
+                <input type="text" formControlName="year" class="col-1"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Course:
+                <input type="text" formControlName="course" class="col-2"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  University :
+                <input type="text" formControlName="university" class="col-3" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-              <button class="btn-sm btn btn-warning rem" title="Remove" type="button" (click)="removeStudentQual(qualIndex)"><b> - </b>  </button>
+                <button class="btn-sm btn btn-warning rem" title="Remove" type="button" (click)="removeStudentQual(qualIndex)"><b> - </b>  </button>
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
+    <div class="card-footer">
+      <button class="btn btn-success" id="submit" type="submit"><b>Save</b></button>
+    </div>
+    </form>
   </div>
-  <div class="card-footer">
-    <button class="btn btn-success" id="submit" type="submit"><b>Save</b></button>
-  </div>
-</form>
-</div>
+  <div class="col-md-12 mt-5">
+    <div class="text-success">
+      <h3>Employees List</h3>
+    </div>
+    <table class="table table-bordered table-hover mt-5">
+      <thead class="table-dark">
+        <tr>
+          <th>Employee</th>
+          <th>Email</th>
+          <th>Course</th>
+          <th>Year</th>
+          <th>College Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of list">
+
+          <td class="col">{{item.name}}</td>
+          <td class="col">{{item.email}}</td>
+          <td class="col">{{item.qualification[0].course}}</td>
+          <td class="col">{{item.qualification[0].year}}</td>
+          <td class="col">{{item.qualification[0].university}}</td>
+
+        </tr>
+      </tbody>
+      </table>
+    </div>
 </div>
 
 </div>

@@ -2,7 +2,7 @@
 <div class="container">
   <div class="card" id="profile">
     <div class="card-header" >
-       <b>Hello {{User.name}}</b>
+       <b>{{User.name}}</b>
     </div>
   <form [formGroup]="form" (ngSubmit)="updateProfile(form)"  enctype="multipart/form-data" >
   <div class="card-body">
